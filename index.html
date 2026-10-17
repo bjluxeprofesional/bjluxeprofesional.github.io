@@ -6,7 +6,7 @@
 <title>BJ LUXE PROFESIONAL · Uñas profesionales en Lugo</title>
 <meta name="description" content="BJ LUXE PROFESIONAL: técnico profesional de uñas en Lugo, Galicia. Reserva tu cita y descubre los cursos disponibles.">
 <link rel="canonical" href="https://bjluxeprofessional.com/">
-  <link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/png" href="/favicon.png">
 <meta name="theme-color" content="#080808">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
@@ -396,8 +396,15 @@ const INSPIRACION = {
 };
 /* ======================================================== */
 
-/* Estado de ediciones (modo editor: abre la página con ?editar al final de la dirección) */
-const EDITOR = location.search.includes("editar");
+/* Estado de ediciones (modo editor privado: solo se activa con tu clave secreta) */
+const _h=s=>{let a=3735928559,b=1103547991;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return (4294967296*(2097151&b)+(a>>>0)).toString(36)};
+let EDITOR = false;
+try {
+  const q = new URLSearchParams(location.search).get("editar");
+  if (q !== null && _h(q) === "11isn30bb30") localStorage.setItem("bjluxe_admin", "1");
+  if (q === "salir") localStorage.removeItem("bjluxe_admin");
+  EDITOR = localStorage.getItem("bjluxe_admin") === "1";
+} catch (e) {}
 let ED = {};
 try { ED = JSON.parse(document.getElementById("ediciones").textContent || "{}"); } catch (e) {}
 if (EDITOR) { try { const l = localStorage.getItem("bjluxe_ed"); if (l) ED = JSON.parse(l); } catch (e) {} }
@@ -427,7 +434,7 @@ $("nav").onclick = () => $("nav").classList.remove("abierto");
 /* Destellos de lujo y frase animada */
 (() => {
   const d = $("destellos"); d.innerHTML = "";
-  const n = innerWidth < 700 ? 16 : 28;
+  const n = 0; /* destellos desactivados */
   for (let i = 0; i < n; i++) {
     const s = document.createElement("i"); s.className = "destello";
     s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--s:${10+Math.random()*16}px;--d:${3+Math.random()*4}s;--r:-${Math.random()*6}s`;
